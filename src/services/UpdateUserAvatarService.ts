@@ -18,7 +18,7 @@ class UpdateUserAvatarService {
     const user = await usersRepository.findOne(userId);
 
     if (!user) {
-      throw new AppError('Esse usuário não existe');
+      throw new AppError('Token JWT invalido', 401);
     }
 
     if (user.avatar) {

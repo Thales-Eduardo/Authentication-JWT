@@ -1,11 +1,13 @@
-import { Router } from 'express';
+import { request, response, Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
 
 import CreateUsersService from '../services/CreateUserService';
-import ResponseUser from '../config/ResponseUser';
-import ensureAuthentication from '../middleware/ensureAuthentication';
 import UpadateUserAvatarService from '../services/UpdateUserAvatarService';
+import DeleteUserService from '../services/DeleteUserService';
+
+import ensureAuthentication from '../middleware/ensureAuthentication';
+import ResponseUser from '../config/ResponseUser';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -38,6 +40,20 @@ usersRouter.patch(
     });
 
     return response.json({ user: ResponseUser.render(newAvatar) });
+  }
+);
+
+usersRouter.delete(
+  '/deleteuser',
+  ensureAuthentication,
+  async (request, response) => {
+    const id = request.userId.id;
+
+    const deleteUser = new DeleteUserService();
+
+    await deleteUser.executar(id);
+
+    response.status(204).send();
   }
 );
 

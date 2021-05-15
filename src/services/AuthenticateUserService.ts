@@ -4,7 +4,7 @@ import { sign } from 'jsonwebtoken';
 
 import Users from '../models/Users';
 import authConfig from '../config/auth';
-import AppErrors from '../errors/AppErrors';
+import AppError from '../errors/AppErrors';
 
 interface Request {
   email: string;
@@ -25,13 +25,13 @@ class AuthenticateUserService {
     });
 
     if (!user) {
-      throw new AppErrors('E-mail ou senha esta, incorreto.', 401);
+      throw new AppError('E-mail ou senha esta, incorreto.', 401);
     }
 
     const comparePassword = await compare(password, user.password);
 
     if (!comparePassword) {
-      throw new AppErrors('E-mail ou senha esta, incorreto.', 401);
+      throw new AppError('E-mail ou senha esta, incorreto.', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

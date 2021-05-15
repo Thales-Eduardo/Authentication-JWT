@@ -25,13 +25,14 @@ usersRouter.put(
   '/updatinf',
   ensureAuthentication,
   async (request, response) => {
-    const { password } = request.body;
+    const { password, newPassword } = request.body;
 
     const updateUserData = new UpdateUserDataService();
 
     await updateUserData.execute({
       user_id: request.userId.id,
       password,
+      newPassword,
     });
 
     response.status(204).send();

@@ -1,15 +1,28 @@
-import { request, response, Router } from 'express';
+import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
 
 import CreateUsersService from '../services/CreateUserService';
 import UpadateUserAvatarService from '../services/UpdateUserAvatarService';
+import DeleteUserService from '../services/DeleteUserService';
+import UpdateUserDataService from '../services/UpdateUserDataService';
+import ShowUserService from '../services/ShowUserService';
 
 import ensureAuthentication from '../middleware/ensureAuthentication';
 import ResponseUser from '../config/ResponseUser';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
+
+usersRouter.get('/profile', ensureAuthentication, async (request, response) => {
+  const showUser = new ShowUserService();
+
+  const user = await showUser.execute({
+    userId: request.userId.id,
+  });
+
+  return response.json({ user: ResponseUser.render(user) });
+});
 
 usersRouter.post('/', async (request, response) => {
   const { name, surname, email, password } = request.body;
@@ -39,6 +52,41 @@ usersRouter.patch(
     });
 
     return response.json({ user: ResponseUser.render(newAvatar) });
+  }
+);
+
+usersRouter.put(
+  '/updating',
+  ensureAuthentication,
+  async (request, response) => {
+    const { name, surname, email, old_Password, newPassword } = request.body;
+
+    const updateUserData = new UpdateUserDataService();
+
+    const user = await updateUserData.execute({
+      user_id: request.userId.id,
+      name,
+      surname,
+      email,
+      old_Password,
+      newPassword,
+    });
+
+    return response.json({ user: ResponseUser.render(user) });
+  }
+);
+
+usersRouter.delete(
+  '/delete_profile',
+  ensureAuthentication,
+  async (request, response) => {
+    const id = request.userId.id;
+
+    const deleteUser = new DeleteUserService();
+
+    await deleteUser.executar(id);
+
+    return response.status(204).send();
   }
 );
 

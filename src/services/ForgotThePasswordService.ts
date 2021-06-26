@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-// import path from 'path';
+import path from 'path';
 
 import AppError from '../errors/AppErrors';
 
@@ -20,7 +20,6 @@ class ForgotThePasswordService {
     const userTokensRepository = getRepository(UserTokens);
 
     const user = await userRepository.findOne(email);
-    console.log(user?.email);
 
     if (!user) {
       throw new AppError('Esse usuário não existe');
@@ -32,8 +31,27 @@ class ForgotThePasswordService {
 
     await userTokensRepository.save(generate);
 
-    await sendmailProvider.sendMail(user.email, `token: ${generate.token}`);
-    console.log(sendmailProvider);
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'ForgotPassword.hbs'
+    );
+
+    await sendmailProvider.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[THALES] Recuperação de senha.',
+      template: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: user.name,
+          link: `http://localhost:3000/reset_password?token=${generate.token}`,
+        },
+      },
+    });
   }
 }
 export default ForgotThePasswordService;

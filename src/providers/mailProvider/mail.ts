@@ -1,5 +1,10 @@
 import nodemailer, { Transporter } from 'nodemailer';
 
+import HandlebarsMailProvider from '../mailTemplateProvider/HandlebarsMailProvider';
+import IMailDTO from './dtos/IMailDTO';
+
+const mailTemplateProvider = new HandlebarsMailProvider();
+
 class EtherealMailProvider {
   private client: Transporter;
 
@@ -20,12 +25,23 @@ class EtherealMailProvider {
     });
   }
 
-  public async sendMail(to: string, body: string): Promise<void> {
+  public async sendMail({
+    to,
+    from,
+    subject,
+    template,
+  }: IMailDTO): Promise<void> {
     const message = await this.client.sendMail({
-      from: 'Thales <thalesdev22@example.com>',
-      to,
-      subject: 'test ✔',
-      text: body,
+      from: {
+        name: from?.name || 'Thales-Eduardo',
+        address: from?.email || 'thalesdev22@gmail.com.br',
+      },
+      to: {
+        name: to.name,
+        address: to.email,
+      },
+      subject,
+      html: await mailTemplateProvider.parse(template),
     });
 
     console.log('Message sent: %s', message.messageId);

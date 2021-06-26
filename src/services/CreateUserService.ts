@@ -1,8 +1,11 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
+import path from 'path';
 
 import Users from '../models/Users';
 import AppErrors from '../errors/AppErrors';
+
+import EtherealMailProvider from '../providers/mailProvider/mail';
 
 interface Request {
   name: string;
@@ -10,6 +13,8 @@ interface Request {
   email: string;
   password: string;
 }
+
+const sendmailProvider = new EtherealMailProvider();
 
 class CreateUsersService {
   public async execute({
@@ -36,7 +41,30 @@ class CreateUsersService {
       email,
       password: hashedPassword,
     });
+
     await UserRepository.save(newUser);
+
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'createUser.hbs'
+    );
+
+    await sendmailProvider.sendMail({
+      to: {
+        name: newUser.name,
+        email: newUser.email,
+      },
+      subject: '[THALES] Cadastro Concluído.',
+      template: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: newUser.name,
+          surname: newUser.surname,
+        },
+      },
+    });
 
     return newUser;
   }

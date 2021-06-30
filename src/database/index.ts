@@ -1,2 +1,2 @@
-import { createConnection } from 'typeorm';
-createConnection().then(() => console.log('connected!🆗🎉'));
+import { createConnections } from 'typeorm';
+createConnections().then(() => console.log('connected!🆗🎉'));

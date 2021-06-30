@@ -6,6 +6,7 @@ import Users from '../models/Users';
 import AppErrors from '../errors/AppErrors';
 
 import EtherealMailProvider from '../providers/mailProvider/mail';
+import NotificationUserServices from './NotificationUserServices';
 
 interface Request {
   name: string;
@@ -14,6 +15,7 @@ interface Request {
   password: string;
 }
 
+const notification = new NotificationUserServices();
 const sendmailProvider = new EtherealMailProvider();
 
 class CreateUsersService {
@@ -64,6 +66,11 @@ class CreateUsersService {
           surname: newUser.surname,
         },
       },
+    });
+
+    await notification.create({
+      user_id: `${newUser.id}`,
+      content: `Olá ${newUser.name}, uma mensagem de boas-vindas foi enviada para seu e-mail.`,
     });
 
     return newUser;

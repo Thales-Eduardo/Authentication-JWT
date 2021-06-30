@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request } from 'express';
 import multer from 'multer';
 import { celebrate, Segments, Joi } from 'celebrate';
 
@@ -12,6 +12,10 @@ import ShowUserService from '../services/ShowUserService';
 
 import ensureAuthentication from '../middleware/ensureAuthentication';
 import ResponseUser from '../config/ResponseUser';
+
+interface MulterRequest extends Request {
+  file: any;
+}
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -61,7 +65,7 @@ usersRouter.patch(
 
     const newAvatar = await createUsers.execute({
       userId: request.userId.id,
-      avatarFilename: request.file.filename,
+      avatarFilename: (request as MulterRequest).file.filename,
     });
 
     return response.json({ user: ResponseUser.render(newAvatar) });

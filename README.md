@@ -12,6 +12,8 @@
 
 - **Deletar perfil:** Para deletar perfil o usuário deve apenas estar autenticado.
 
+- **Notificação com o mongodb:** Quando o usuário criar conta e trocar a senha, recebera uma notificação sobre.
+
 ---
 
 # Cadastro.
@@ -25,3 +27,8 @@
 # Token gerado para recuperar senha.
 
 ![token](./docs/token.png)
+
+# Dependências.
+
+bcryptjs, celebrate, cors, date-fns, dotenv, express, express-async-errors,
+handlebars, jsonwebtoken, mongodb, multer, nodemailer, pg, reflect-metadata.

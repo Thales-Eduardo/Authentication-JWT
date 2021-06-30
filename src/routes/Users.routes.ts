@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { celebrate, Segments, Joi } from 'celebrate';
+
 import uploadConfig from '../config/upload';
 
 import CreateUsersService from '../services/CreateUserService';
@@ -24,20 +26,31 @@ usersRouter.get('/profile', ensureAuthentication, async (request, response) => {
   return response.json({ user: ResponseUser.render(user) });
 });
 
-usersRouter.post('/', async (request, response) => {
-  const { name, surname, email, password } = request.body;
+usersRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      surname: Joi.string(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  async (request, response) => {
+    const { name, surname, email, password } = request.body;
 
-  const createUsers = new CreateUsersService();
+    const createUsers = new CreateUsersService();
 
-  const newUser = await createUsers.execute({
-    name,
-    surname,
-    email,
-    password,
-  });
+    const newUser = await createUsers.execute({
+      name,
+      surname,
+      email,
+      password,
+    });
 
-  return response.json({ user: ResponseUser.render(newUser) });
-});
+    return response.json({ user: ResponseUser.render(newUser) });
+  }
+);
 
 usersRouter.patch(
   '/avatar',
@@ -57,6 +70,17 @@ usersRouter.patch(
 
 usersRouter.put(
   '/updating',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      old_Password: Joi.string(),
+      newPassword: Joi.string(),
+      password_confirmation: Joi.string()
+        .required()
+        .valid(Joi.ref('newPassword')),
+    },
+  }),
   ensureAuthentication,
   async (request, response) => {
     const { name, surname, email, old_Password, newPassword } = request.body;

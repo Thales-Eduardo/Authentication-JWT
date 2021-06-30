@@ -4,6 +4,7 @@ import { isAfter, addHours } from 'date-fns';
 
 import UserTokens from '../models/UserTokens';
 import Users from '../models/Users';
+import NotificationUserServices from './NotificationUserServices';
 
 import AppError from '../errors/AppErrors';
 
@@ -11,6 +12,8 @@ interface IRequest {
   token: string;
   password: string;
 }
+
+const notification = new NotificationUserServices();
 
 class ResetPasswordService {
   public async execute({ token, password }: IRequest): Promise<void> {
@@ -41,6 +44,11 @@ class ResetPasswordService {
     user.password = await hash(password, 8);
 
     await userRepository.save(user);
+
+    await notification.create({
+      user_id: `${user.id}`,
+      content: `Olá ${user.name}, Ouvi uma recuperação de senha em sua conta.`,
+    });
   }
 }
 export default ResetPasswordService;

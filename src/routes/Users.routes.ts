@@ -80,9 +80,7 @@ usersRouter.put(
       email: Joi.string().email().required(),
       old_Password: Joi.string(),
       newPassword: Joi.string(),
-      password_confirmation: Joi.string()
-        .required()
-        .valid(Joi.ref('newPassword')),
+      password_confirmation: Joi.string().valid(Joi.ref('newPassword')),
     },
   }),
   ensureAuthentication,

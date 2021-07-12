@@ -33,6 +33,11 @@
 bcryptjs, celebrate, cors, date-fns, dotenv, express, express-async-errors,
 handlebars, jsonwebtoken, mongodb, multer, nodemailer, pg, reflect-metadata.
 
+---
+# Docker
+
+![Cadastro](./docs/docker.png)
+
 # Build
 
 ```bash

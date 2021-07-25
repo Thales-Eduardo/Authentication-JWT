@@ -31,7 +31,7 @@
 # Dependências.
 
 bcryptjs, celebrate, cors, date-fns, dotenv, express, express-async-errors,
-handlebars, jsonwebtoken, mongodb, multer, nodemailer, pg, reflect-metadata.
+handlebars, jsonwebtoken, mongodb, multer, nodemailer, pg,
 
 ---
 

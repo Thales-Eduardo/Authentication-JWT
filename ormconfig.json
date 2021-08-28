@@ -1,7 +1,7 @@
 [
   {
     "type": "postgres",
-    "host": "localhost",
+    "host": "postgres_bd",
     "port": 5432,
     "username": "postgres",
     "password": "docker",
@@ -16,9 +16,9 @@
   {
     "name": "mongo",
     "type": "mongodb",
-    "host": "localhost",
-    "port": 27017,
+    "host": "mongo_db",
     "database": "cadastro-e-login",
+    "port": 27017,
     "useUnifiedTopology": true,
     "entities": ["./src/schemas/*.ts"]
   }

@@ -1,5 +1,19 @@
 # Cadastro de usuários
 
+Para rodar o projeto tem que ter o [Docker](https://www.docker.com/) instalado na sua maquina.
+
+> Para subir os contêineres.
+
+```bash
+docker-compose up -d
+```
+
+> Para deletar os contêineres.
+
+```bash
+docker-compose down
+```
+
 - **Cadastro:** Ao se cadastra o usuário recebera um email notificando o sucesso.
 
 - **Autenticação:** A autenticação foi feita com jwt.

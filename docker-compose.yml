@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  postgres_bd:
+    image: postgres
+    restart: always
+    container_name: user
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=cadastro-de-usuarios
+    volumes:
+      - ./pgdata:/data/postgres
+
+  mongo_db:
+    image: mongo
+    restart: always
+    container_name: notification
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=cadastro-e-login
+    volumes:
+      - ./mgdata:/data/db
+
+  api:
+    build: .
+    image: authentication
+    restart: always
+    container_name: node
+    ports:
+      - 3333:3333
+    volumes:
+      - .:/usr/api/authentication
+    depends_on:
+      - postgres_bd
+      - mongo_db

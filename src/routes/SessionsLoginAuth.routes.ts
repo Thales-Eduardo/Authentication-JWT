@@ -1,9 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
+import { classToClass } from 'class-transformer';
 
 import AuthenticateUserService from '../services/AuthenticateUserService';
-
-import ResponseUser from '../config/ResponseUser';
 
 const usersRouter = Router();
 
@@ -25,7 +24,7 @@ usersRouter.post(
       password,
     });
 
-    return response.json({ user: ResponseUser.render(user), token });
+    return response.json({ user: classToClass(user), token });
   }
 );
 

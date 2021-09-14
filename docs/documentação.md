@@ -4,7 +4,7 @@
 
 - URL ` http://localhost:3333/users/profile`
 
-- Tirando a propriedade `surname`, todas as propriedades são obrigatórias.
+- Todas as propriedades são obrigatórias.
 
 Request =>
 
@@ -20,7 +20,15 @@ Request =>
 Response =>
 
 ```json
-
+{
+  "name": "thales",
+  "surname": "Eduardo",
+  "email": "thalesdev22@gmail.com",
+  "id": "88edea1f-3f01-48b8-aa9a-6b8717db10db",
+  "created_at": "2021-09-14T17:07:13.442Z",
+  "updated_at": "2021-09-14T17:07:13.442Z",
+  "avatarUrl": null
+}
 ```
 
 ---
@@ -45,7 +53,19 @@ Request =>
 Response =>
 
 ```json
-
+{
+  "user": {
+    "id": "88edea1f-3f01-48b8-aa9a-6b8717db10db",
+    "name": "thales",
+    "surname": "Eduardo",
+    "email": "thalesdev22@gmail.com",
+    "avatar": null,
+    "created_at": "2021-09-14T17:07:13.442Z",
+    "updated_at": "2021-09-14T17:07:13.442Z",
+    "avatarUrl": null
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzE2MzkzMzUsImV4cCI6MTYzMTcyNTczNSwic3ViIjoiODhlZGVhMWYtM2YwMS00OGI4LWFhOWEtNmI4NzE3ZGIxMGRiIn0.QxD29zaV6AFZpT8ojST4VXq-ixRUOzFvrW7STWluc4A"
+}
 ```
 
 ---
@@ -59,7 +79,28 @@ Response =>
 Response =>
 
 ```json
-
+[
+  {
+    "id": "fadb9b95-076a-4292-a28e-edf26acff04d",
+    "name": "thales",
+    "surname": "Eduardo",
+    "email": "thalesdev@gmail.com",
+    "avatar": null,
+    "created_at": "2021-09-14T17:07:08.296Z",
+    "updated_at": "2021-09-14T17:07:08.296Z",
+    "avatarUrl": null
+  },
+  {
+    "id": "88edea1f-3f01-48b8-aa9a-6b8717db10db",
+    "name": "Thales",
+    "surname": "Eduardo",
+    "email": "thalesdev22@gmail.com",
+    "avatar": "bfc28266700616246508-21-215651_madara-uchiha-wallpaper-4k.jpg",
+    "created_at": "2021-09-14T17:07:13.442Z",
+    "updated_at": "2021-09-14T17:09:45.185Z",
+    "avatarUrl": "http://localhost:3000/files/bfc28266700616246508-21-215651_madara-uchiha-wallpaper-4k.jpg"
+  }
+]
 ```
 
 ---
@@ -82,13 +123,13 @@ Status.code 200
 
 - URL ` http://localhost:3333/users/updating`
 
-- Tirando a propriedade `surname`, todas as propriedades são obrigatórias.
+- Todas as propriedades são obrigatórias.
 
 Request =>
 
 ```json
 {
-  "name": "thales",
+  "name": "Thales",
   "surname": "Eduardo",
   "email": "thalesdev22@gmail.com",
   "old_Password": "123456",
@@ -100,7 +141,16 @@ Request =>
 Response =>
 
 ```json
-
+{
+  "id": "88edea1f-3f01-48b8-aa9a-6b8717db10db",
+  "name": "Thales",
+  "surname": "Eduardo",
+  "email": "thalesdev22@gmail.com",
+  "avatar": null,
+  "created_at": "2021-09-14T17:07:13.442Z",
+  "updated_at": "2021-09-14T17:09:19.319Z",
+  "avatarUrl": null
+}
 ```
 
 ---
@@ -127,7 +177,16 @@ if (event.target.files) {
 Response =>
 
 ```json
-
+{
+  "id": "88edea1f-3f01-48b8-aa9a-6b8717db10db",
+  "name": "Thales",
+  "surname": "Eduardo",
+  "email": "thalesdev22@gmail.com",
+  "avatar": "bfc28266700616246508-21-215651_madara-uchiha-wallpaper-4k.jpg",
+  "created_at": "2021-09-14T17:07:13.442Z",
+  "updated_at": "2021-09-14T17:09:45.185Z",
+  "avatarUrl": "http://localhost:3000/files/bfc28266700616246508-21-215651_madara-uchiha-wallpaper-4k.jpg"
+}
 ```
 
 ---
@@ -152,9 +211,7 @@ Request =>
 
 Response =>
 
-```json
-
-```
+Status code 204
 
 ---
 
@@ -178,6 +235,7 @@ Request =>
 
 Response =>
 
-```json
+Status code 204
+junto com um email enviado.
 
-```
+- Em localhost o link para ter acesso ao e-mail com o link para trocar a senha fica dentro do log no contêiner node.

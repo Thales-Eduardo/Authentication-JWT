@@ -7,6 +7,7 @@ import AppErrors from '../errors/AppErrors';
 
 import EtherealMailProvider from '../providers/mailProvider/mail';
 import NotificationUserServices from './NotificationUserServices';
+import { CacheProvider } from './CacheService';
 
 interface Request {
   name: string;
@@ -17,6 +18,7 @@ interface Request {
 
 const notification = new NotificationUserServices();
 const sendmailProvider = new EtherealMailProvider();
+const cacheProvider = new CacheProvider();
 
 class CreateUsersService {
   public async execute({
@@ -72,6 +74,8 @@ class CreateUsersService {
       user_id: `${newUser.id}`,
       content: `Olá ${newUser.name}, uma mensagem de boas-vindas foi enviada para seu e-mail.`,
     });
+
+    await cacheProvider.invalidatePrefix('users');
 
     return newUser;
   }

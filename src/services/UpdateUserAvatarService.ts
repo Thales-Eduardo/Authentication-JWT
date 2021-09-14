@@ -6,10 +6,14 @@ import Users from '../models/Users';
 import uploadConfig from '../config/upload';
 import AppError from '../errors/AppErrors';
 
+import { CacheProvider } from './CacheService';
+
 interface Request {
   userId: string;
   avatarFilename: string;
 }
+
+const cacheProvider = new CacheProvider();
 
 class UpdateUserAvatarService {
   public async execute({ userId, avatarFilename }: Request): Promise<Users> {
@@ -30,6 +34,7 @@ class UpdateUserAvatarService {
       }
     }
     user.avatar = avatarFilename;
+    await cacheProvider.invalidatePrefix('users');
     await usersRepository.save(user);
 
     return user;

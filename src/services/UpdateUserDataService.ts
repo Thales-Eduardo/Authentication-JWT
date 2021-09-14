@@ -4,6 +4,8 @@ import { hash, compare } from 'bcryptjs';
 import AppError from '../errors/AppErrors';
 import Users from '../models/Users';
 
+import { CacheProvider } from './CacheService';
+
 interface Request {
   user_id: string;
   name: string;
@@ -12,6 +14,8 @@ interface Request {
   old_Password: string;
   newPassword: string;
 }
+
+const cacheProvider = new CacheProvider();
 
 class UpdateUserDataService {
   public async execute({
@@ -57,6 +61,8 @@ class UpdateUserDataService {
 
       user.password = await hash(newPassword, 8);
     }
+
+    await cacheProvider.invalidatePrefix('users');
 
     return await userRepository.save(user);
   }

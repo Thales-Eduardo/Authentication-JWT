@@ -6,6 +6,9 @@ import AppErrors from '../errors/AppErrors';
 import uploadConfig from '../config/upload';
 import Users from '../models/Users';
 
+import { CacheProvider } from './CacheService';
+const cacheProvider = new CacheProvider();
+
 class DeleteUserService {
   public async executar(id: string): Promise<void> {
     const userRepository = getRepository(Users);
@@ -25,6 +28,7 @@ class DeleteUserService {
       }
     }
 
+    await cacheProvider.invalidatePrefix('users');
     await userRepository.remove(user);
   }
 }

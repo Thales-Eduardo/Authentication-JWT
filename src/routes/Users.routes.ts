@@ -1,6 +1,7 @@
 import { Router, Request } from 'express';
 import multer from 'multer';
 import { celebrate, Segments, Joi } from 'celebrate';
+import { classToClass } from 'class-transformer';
 
 import uploadConfig from '../config/upload';
 
@@ -11,7 +12,6 @@ import UpdateUserDataService from '../services/UpdateUserDataService';
 import ShowUsersService from '../services/ShowUsersService';
 
 import ensureAuthentication from '../middleware/ensureAuthentication';
-import ResponseUser from '../config/ResponseUser';
 
 interface MulterRequest extends Request {
   file: any;
@@ -27,7 +27,7 @@ usersRouter.get('/profile', ensureAuthentication, async (request, response) => {
     userId: request.userId.id,
   });
 
-  return response.json({ user: ResponseUser.render(user) });
+  return response.json(classToClass(user));
 });
 
 usersRouter.post(
@@ -35,7 +35,7 @@ usersRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      surname: Joi.string(),
+      surname: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
     },
@@ -52,7 +52,7 @@ usersRouter.post(
       password,
     });
 
-    return response.json({ user: ResponseUser.render(newUser) });
+    return response.json(classToClass(newUser));
   }
 );
 
@@ -68,7 +68,7 @@ usersRouter.patch(
       avatarFilename: (request as MulterRequest).file.filename,
     });
 
-    return response.json({ user: ResponseUser.render(newAvatar) });
+    return response.json(classToClass(newAvatar));
   }
 );
 
@@ -77,6 +77,7 @@ usersRouter.put(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
+      surname: Joi.string().required(),
       email: Joi.string().email().required(),
       old_Password: Joi.string(),
       newPassword: Joi.string(),
@@ -98,7 +99,7 @@ usersRouter.put(
       newPassword,
     });
 
-    return response.json({ user: ResponseUser.render(user) });
+    return response.json(classToClass(user));
   }
 );
 

@@ -8,7 +8,7 @@ import CreateUsersService from '../services/CreateUserService';
 import UpadateUserAvatarService from '../services/UpdateUserAvatarService';
 import DeleteUserService from '../services/DeleteUserService';
 import UpdateUserDataService from '../services/UpdateUserDataService';
-import ShowUserService from '../services/ShowUserService';
+import ShowUsersService from '../services/ShowUsersService';
 
 import ensureAuthentication from '../middleware/ensureAuthentication';
 import ResponseUser from '../config/ResponseUser';
@@ -21,7 +21,7 @@ const usersRouter = Router();
 const upload = multer(uploadConfig);
 
 usersRouter.get('/profile', ensureAuthentication, async (request, response) => {
-  const showUser = new ShowUserService();
+  const showUser = new ShowUsersService();
 
   const user = await showUser.execute({
     userId: request.userId.id,

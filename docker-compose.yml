@@ -4,7 +4,7 @@ services:
   postgres_bd:
     image: postgres
     restart: always
-    container_name: user
+    container_name: postgres
     ports:
       - 5432:5432
     environment:
@@ -17,13 +17,25 @@ services:
   mongo_db:
     image: mongo
     restart: always
-    container_name: notification
+    container_name: mongo
     ports:
       - 27017:27017
     environment:
       - MONGO_INITDB_DATABASE=cadastro-e-login
     volumes:
       - ./mgdata:/data/db
+
+  redis_bd:
+    image: 'redis:alpine'
+    restart: always
+    container_name: redis
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    command: redis-server --requirepass redisProduct
+    volumes:
+      - ./rsdata:/data/rd
 
   api:
     build: .

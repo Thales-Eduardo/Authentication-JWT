@@ -6,3 +6,6 @@ build/
 tmp/*
 !tmp/.gitkeep
 # .env/
+mgdata
+pgdata
+rsdata

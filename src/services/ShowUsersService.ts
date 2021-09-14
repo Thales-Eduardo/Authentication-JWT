@@ -7,7 +7,7 @@ interface Request {
   userId: string;
 }
 
-class ShowUserService {
+class ShowUsersService {
   public async execute({ userId }: Request): Promise<Users> {
     const userRepository = getRepository(Users);
 
@@ -21,4 +21,4 @@ class ShowUserService {
   }
 }
 
-export default ShowUserService;
+export default ShowUsersService;

@@ -42,11 +42,6 @@ docker-compose down
 
 ![token](./docs/token.png)
 
-# Dependências.
-
-bcryptjs, celebrate, cors, date-fns, dotenv, express, express-async-errors,
-handlebars, jsonwebtoken, mongodb, multer, nodemailer, pg,
-
 ---
 
 # Docker

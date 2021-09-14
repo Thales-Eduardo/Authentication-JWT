@@ -6,6 +6,8 @@ import 'express-async-errors';
 import cors from 'cors';
 import { errors } from 'celebrate';
 
+import { rateLimiter } from './middleware/rateLimeter';
+
 import routes from './routes';
 import uploadCofig from './config/upload';
 
@@ -19,6 +21,7 @@ app.use(
     origin: 'http://localhost:3000',
   })
 );
+app.use(rateLimiter);
 app.use(express.json());
 app.use('/files', express.static(uploadCofig.directory));
 app.use(routes);

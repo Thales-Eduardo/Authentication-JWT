@@ -1,18 +1,15 @@
 import { getRepository } from 'typeorm';
-import path from 'path';
 
 import AppError from '../errors/AppErrors';
 
 import UserTokens from '../models/UserTokens';
 import Users from '../models/Users';
 
-import EtherealMailProvider from '../providers/mailProvider/mail';
+import { mailForgotPassword } from '../jobs/index';
 
 interface IRequest {
   email: string;
 }
-
-const sendmailProvider = new EtherealMailProvider();
 
 class ForgotThePasswordService {
   public async execute({ email }: IRequest): Promise<void> {
@@ -31,27 +28,9 @@ class ForgotThePasswordService {
 
     await userTokensRepository.save(generate);
 
-    const forgotPasswordTemplate = path.resolve(
-      __dirname,
-      '..',
-      'views',
-      'ForgotPassword.hbs'
-    );
-
-    await sendmailProvider.sendMail({
-      to: {
-        name: user.name,
-        email: user.email,
-      },
-      subject: '[THALES] Recuperação de senha.',
-      template: {
-        file: forgotPasswordTemplate,
-        variables: {
-          name: user.name,
-          link: `${process.env.APP_WEB_URL}/reset_password?token=${generate.token}`,
-        },
-      },
-    });
+    const users = { name: user.name, email: user.email, token: generate.token };
+    const options = { delay: 10, attempts: 3 };
+    await mailForgotPassword.add({ users }, options);
   }
 }
 export default ForgotThePasswordService;

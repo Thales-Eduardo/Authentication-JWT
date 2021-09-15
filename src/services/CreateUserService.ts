@@ -1,13 +1,12 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
-import path from 'path';
 
 import Users from '../models/Users';
 import AppErrors from '../errors/AppErrors';
 
-import EtherealMailProvider from '../providers/mailProvider/mail';
 import NotificationUserServices from './NotificationUserServices';
 import { CacheProvider } from './CacheService';
+import { mailRegister } from '../jobs/index';
 
 interface Request {
   name: string;
@@ -17,7 +16,6 @@ interface Request {
 }
 
 const notification = new NotificationUserServices();
-const sendmailProvider = new EtherealMailProvider();
 const cacheProvider = new CacheProvider();
 
 class CreateUsersService {
@@ -48,27 +46,9 @@ class CreateUsersService {
 
     await UserRepository.save(newUser);
 
-    const forgotPasswordTemplate = path.resolve(
-      __dirname,
-      '..',
-      'views',
-      'createUser.hbs'
-    );
-
-    await sendmailProvider.sendMail({
-      to: {
-        name: newUser.name,
-        email: newUser.email,
-      },
-      subject: '[THALES] Cadastro Concluído.',
-      template: {
-        file: forgotPasswordTemplate,
-        variables: {
-          name: newUser.name,
-          surname: newUser.surname,
-        },
-      },
-    });
+    const user = { name, surname, email };
+    const options = { delay: 10, attempts: 3 };
+    await mailRegister.add({ user }, options);
 
     await notification.create({
       user_id: `${newUser.id}`,

@@ -14,7 +14,7 @@ docker-compose up -d
 docker-compose down
 ```
 
-- **Cadastro:** Ao se cadastra o usuário recebera um email notificando o sucesso.
+- **Cadastro:** Ao se cadastra o usuário recebera um email notificando o sucesso no cadastro.
 
 - **Autenticação:** A autenticação foi feita com jwt.
 

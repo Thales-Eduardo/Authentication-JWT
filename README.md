@@ -1,5 +1,9 @@
 # Cadastro de usuários
 
+[Documentação](./docs/documt.md).
+
+---
+
 Para rodar o projeto tem que ter o [Docker](https://www.docker.com/) instalado na sua maquina.
 
 > Para subir os contêineres.

@@ -24,7 +24,7 @@ docker-compose down
 
 - **Recuperar senha:** Token gerado pela aplicação, enviado em um link no email do usuário, esse link expira em 1h.
 
-- **Buscar usuários:** Para isso o usuário deve estar autenticado na aplicação, e na primeira busca sera feita uma query no banco nas demais caso não acha nenhuma alteração nos dados buscara no cache.
+- **Buscar usuários:** Para isso o usuário deve estar autenticado na aplicação, e na primeira busca sera feita uma query no banco, nas demais caso não haja nenhuma alteração nos dados buscara no cache.
 
 - **Atualizar perfil:** Para atualizar as informações do perfil o usuário deve estar autenticado.
 

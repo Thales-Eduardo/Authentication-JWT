@@ -32,7 +32,7 @@ docker-compose down
 
 - **Notificação com o mongodb:** Quando o usuário criar conta e trocar a senha, recebera uma notificação sobre.
 
-- **E-mail**: Todos os e-mais entra fila, diminuindo o tempo de resposta, caso a 1 tentativa falhe o bull tentara enviar mais três vezes.
+- **E-mail**: Todos os e-mais entra em fila, diminuindo o tempo de resposta, caso a 1 tentativa falhe o bull tentara enviar mais três vezes.
 
 ---
 

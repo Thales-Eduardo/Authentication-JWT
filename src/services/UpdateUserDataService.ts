@@ -39,7 +39,7 @@ class UpdateUserDataService {
     });
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
-      throw new AppError('Esse e-mail já está em uso!', 403);
+      throw new AppError('Esse e-mail já está em uso!');
     }
 
     user.name = name;

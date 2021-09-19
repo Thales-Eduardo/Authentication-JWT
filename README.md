@@ -24,13 +24,15 @@ docker-compose down
 
 - **Recuperar senha:** Token gerado pela aplicação, enviado em um link no email do usuário, esse link expira em 1h.
 
-- **Buscar usuários:** Para isso a usuário deve estar autenticado na aplicação.
+- **Buscar usuários:** Para isso o usuário deve estar autenticado na aplicação, e na primeira busca sera feita uma query no banco nas demais caso não acha nenhuma alteração nos dados buscara no cache.
 
 - **Atualizar perfil:** Para atualizar as informações do perfil o usuário deve estar autenticado.
 
 - **Deletar perfil:** Para deletar perfil o usuário deve apenas estar autenticado.
 
 - **Notificação com o mongodb:** Quando o usuário criar conta e trocar a senha, recebera uma notificação sobre.
+
+- **E-mail**: Todos os e-mais entra fila, diminuindo o tempo de resposta, caso a 1 tentativa falhe o bull tentara enviar mais três vezes.
 
 ---
 

@@ -2,7 +2,7 @@
 
 - POST
 
-- URL ` http://localhost:3333/users/profile`
+- URL ` http://localhost:3333/users`
 
 - Todas as propriedades são obrigatórias.
 
@@ -37,7 +37,7 @@ Response =>
 
 - POST
 
-- URL ` http://localhost:3333/users/sessions`
+- URL ` http://localhost:3333/sessions`
 
 - Todas as propriedades são obrigatórias.
 
@@ -74,7 +74,7 @@ Response =>
 
 - GET => Rota privada `token`
 
-- URL ` http://localhost:3333/users/sessions`
+- URL `http://localhost:3333/users/profile`
 
 Response =>
 

@@ -168,4 +168,30 @@ describe('Integration tests', () => {
       },
     });
   });
+
+  it('Refresh token.', async () => {
+    const user = await axios.post(`${url}/users`, {
+      name: 'thales',
+      surname: 'Eduardo',
+      email: 'thalesdev22@gmail.com',
+      password: '123456',
+    });
+    const userData = user.data;
+    const auth = await axios.post(`${url}/sessions`, {
+      email: userData.email,
+      password: '123456',
+    });
+
+    const refreshToken = await axios.post(`${url}/users/refresh_token`, {
+      id: auth.data.refreshToken.id,
+    });
+
+    expect(refreshToken.data).toHaveProperty('token');
+
+    await axios.delete(`${url}/users/delete_profile`, {
+      headers: {
+        Authorization: `Bearer ${refreshToken.data.token}`,
+      },
+    });
+  });
 });

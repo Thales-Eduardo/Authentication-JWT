@@ -55,16 +55,23 @@ Response =>
 ```json
 {
   "user": {
-    "id": "88edea1f-3f01-48b8-aa9a-6b8717db10db",
+    "id": "da48be50-87f6-426c-ba3c-85b7be8d2317",
     "name": "thales",
     "surname": "Eduardo",
     "email": "thalesdev22@gmail.com",
     "avatar": null,
-    "created_at": "2021-09-14T17:07:13.442Z",
-    "updated_at": "2021-09-14T17:07:13.442Z",
+    "created_at": "2021-10-15T15:32:14.389Z",
+    "updated_at": "2021-10-15T15:32:14.389Z",
     "avatarUrl": null
   },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzE2MzkzMzUsImV4cCI6MTYzMTcyNTczNSwic3ViIjoiODhlZGVhMWYtM2YwMS00OGI4LWFhOWEtNmI4NzE3ZGIxMGRiIn0.QxD29zaV6AFZpT8ojST4VXq-ixRUOzFvrW7STWluc4A"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzQzMTE5NDAsImV4cCI6MTYzNDMxMTk4MCwic3ViIjoiZGE0OGJlNTAtODdmNi00MjZjLWJhM2MtODViN2JlOGQyMzE3In0.xTkZqhh-8q8Nj5L9ayee0hqwL3db7KsLtL3z_q_9sGU",
+  "refreshToken": {
+    "expiresIn": 1634311955,
+    "user_id": "da48be50-87f6-426c-ba3c-85b7be8d2317",
+    "id": "4baceb26-466c-4d3c-88c1-d6540017a80d",
+    "created_at": "2021-10-15T15:32:20.276Z",
+    "updated_at": "2021-10-15T15:32:20.276Z"
+  }
 }
 ```
 
@@ -239,3 +246,31 @@ Status code 204
 junto com um email enviado.
 
 - Em localhost o link para ter acesso ao e-mail com o link para trocar a senha fica dentro do log no contêiner node.
+
+# Refresh Token.
+
+- POST
+
+- URL ` http://localhost:3333/users/refresh_token`
+
+- Todas as propriedades são obrigatórias.
+
+- O id que deve passar no `body` da `req` e o id da tabela `refreshToken` que vem da `req` de `login`.
+
+Request =>
+
+```json
+{
+  "id": "4baceb26-466c-4d3c-88c1-d6540017a80d"
+}
+```
+
+Response =>
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzQzMTE5OTIsImV4cCI6MTYzNDM5ODM5Miwic3ViIjoiZGE0OGJlNTAtODdmNi00MjZjLWJhM2MtODViN2JlOGQyMzE3In0.X-njA7NY32ffjlFFq3MvujnNhyRKvVrKc1P23mCQCFc"
+}
+```
+
+---

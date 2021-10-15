@@ -10,6 +10,7 @@ import UpadateUserAvatarService from '../services/UpdateUserAvatarService';
 import DeleteUserService from '../services/DeleteUserService';
 import UpdateUserDataService from '../services/UpdateUserDataService';
 import ShowUsersService from '../services/ShowUsersService';
+import { RefreshTokenUserServices } from '../services/RefreshTokenUserServices';
 
 import ensureAuthentication from '../middleware/ensureAuthentication';
 
@@ -116,5 +117,14 @@ usersRouter.delete(
     return response.status(204).send();
   }
 );
+
+usersRouter.post('/refresh_token', async (request, response) => {
+  const { id } = request.body;
+
+  const refreshTokenUser = new RefreshTokenUserServices();
+  const token = await refreshTokenUser.execute(id);
+
+  response.json({ token: token });
+});
 
 export default usersRouter;

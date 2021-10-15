@@ -19,12 +19,12 @@ usersRouter.post(
 
     const AuthenticateUser = new AuthenticateUserService();
 
-    const { user, token } = await AuthenticateUser.execute({
+    const { user, token, refreshToken } = await AuthenticateUser.execute({
       email,
       password,
     });
 
-    return response.json({ user: classToClass(user), token });
+    return response.json({ user: classToClass(user), token, refreshToken });
   }
 );
 

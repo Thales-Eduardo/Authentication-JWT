@@ -6,6 +6,8 @@ import Users from '../models/Users';
 import authConfig from '../config/auth';
 import AppError from '../errors/AppErrors';
 
+import { GenerateRefreshToken } from '../providers/refreshToken/GenerateRefreshToken';
+
 interface Request {
   email: string;
   password: string;
@@ -14,6 +16,7 @@ interface Request {
 interface Response {
   user: Users;
   token: string;
+  refreshToken: any;
 }
 
 class AuthenticateUserService {
@@ -41,9 +44,13 @@ class AuthenticateUserService {
       expiresIn,
     });
 
+    const generateRefreshToken = new GenerateRefreshToken();
+    const refreshToken = await generateRefreshToken.execute(user.id);
+
     return {
       user,
       token,
+      refreshToken,
     };
   }
 }

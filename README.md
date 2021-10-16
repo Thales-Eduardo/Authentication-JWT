@@ -36,15 +36,23 @@ docker-compose down
 
 ---
 
-# Cadastro.
+# Tabelas
+
+<div align="center">
+
+![tabelas](./docs/bd.png)
+
+</div>
+
+# Cadastro
 
 ![Cadastro](./docs/mailCadastro.png)
 
-# Recuperar senha.
+# Recuperar senha
 
 ![RecuperarSenha](./docs/mailRec.png)
 
-# Token gerado para recuperar senha.
+# Token gerado para recuperar senha
 
 ![token](./docs/token.png)
 

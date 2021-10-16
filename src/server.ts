@@ -5,6 +5,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import { errors } from 'celebrate';
+import helmet from 'helmet';
 
 import { rateLimiter } from './middleware/rateLimeter';
 
@@ -15,12 +16,14 @@ import AppErrors from './errors/AppErrors';
 import './database';
 
 const app = express();
+const port = 3333;
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.APP_WEB_URL,
   })
 );
+app.use(helmet());
 app.use(rateLimiter);
 app.use(express.json());
 app.use('/files', express.static(uploadCofig.directory));
@@ -44,6 +47,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(3333, () => {
+app.listen(port, () => {
   console.log('No ar! http://localhost:3333 🔥🔥🔥🚒🚒');
 });

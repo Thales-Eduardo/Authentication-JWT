@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   publish:
-    name: Teste
+    name: teste
     runs-on: ubutun-latest
     steps:
       - uses: actions/checkout@v2

@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 
 import AppError from '../errors/AppErrors';
 import Users from '../models/Users';
-import { classToClass } from 'class-transformer';
+import { classToPlain } from 'class-transformer';
 
 import { CacheProvider } from './CacheService';
 
@@ -25,7 +25,7 @@ class ShowUsersService {
 
     if (!users) {
       users = await userRepository.find();
-      await cacheProvider.save(`users:${userId}`, classToClass(users));
+      await cacheProvider.save(`users:${userId}`, classToPlain(users));
     }
 
     return users;

@@ -47,8 +47,7 @@ class CreateUsersService {
     await UserRepository.save(newUser);
 
     const user = { name, surname, email };
-    const options = { delay: 10, attempts: 3 };
-    await mailRegister.add({ user }, options);
+    await mailRegister.add({ user });
 
     await notification.create({
       user_id: `${newUser.id}`,

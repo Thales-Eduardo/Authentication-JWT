@@ -10,7 +10,7 @@ export class CacheProvider {
   }
 
   public async save(key: string, value: any): Promise<void> {
-    this.client.set(key, JSON.stringify(value));
+    await this.client.set(key, JSON.stringify(value));
   }
 
   public async getCache<T>(key: string): Promise<T | null> {

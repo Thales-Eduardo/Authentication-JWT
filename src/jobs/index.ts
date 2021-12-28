@@ -9,19 +9,19 @@ import emailForgotPassword from './emailForgotPassword';
 //rows
 export const mailRegister = new Bull(emailRegister.key, {
   redis: redisConfig,
+  defaultJobOptions: { delay: 10, attempts: 3 },
 });
 export const mailForgotPassword = new Bull(emailForgotPassword.key, {
   redis: redisConfig,
+  defaultJobOptions: { delay: 10, attempts: 3 },
 });
 
 //inspect errors
 mailRegister.on('failed', (job, err) => {
-  console.log('job failed', job.name, job.data);
-  console.log(err);
+  console.log('Error - mailRegister', job.name, job.data, err);
 });
 mailForgotPassword.on('failed', (job, err) => {
-  console.log('job failed', job.name, job.data);
-  console.log(err);
+  console.log('Error - mailForgotPassword', job.name, job.data, err);
 });
 
 //shot

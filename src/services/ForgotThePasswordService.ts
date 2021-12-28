@@ -29,8 +29,7 @@ class ForgotThePasswordService {
     await userTokensRepository.save(generate);
 
     const users = { name: user.name, email: user.email, token: generate.token };
-    const options = { delay: 10, attempts: 3 };
-    await mailForgotPassword.add({ users }, options);
+    await mailForgotPassword.add({ users });
   }
 }
 export default ForgotThePasswordService;

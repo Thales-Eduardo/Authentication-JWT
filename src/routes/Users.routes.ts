@@ -1,7 +1,7 @@
 import { Router, Request } from 'express';
 import multer from 'multer';
 import { celebrate, Segments, Joi } from 'celebrate';
-import { classToClass } from 'class-transformer';
+import { classToPlain } from 'class-transformer';
 
 import uploadConfig from '../config/upload';
 
@@ -28,7 +28,7 @@ usersRouter.get('/profile', ensureAuthentication, async (request, response) => {
     userId: request.userId.id,
   });
 
-  return response.json(classToClass(user));
+  return response.json(user);
 });
 
 usersRouter.post(
@@ -53,7 +53,7 @@ usersRouter.post(
       password,
     });
 
-    return response.json(classToClass(newUser));
+    return response.json(classToPlain(newUser));
   }
 );
 
@@ -69,7 +69,7 @@ usersRouter.patch(
       avatarFilename: (request as MulterRequest).file.filename,
     });
 
-    return response.json(classToClass(newAvatar));
+    return response.json(classToPlain(newAvatar));
   }
 );
 
@@ -100,7 +100,7 @@ usersRouter.put(
       newPassword,
     });
 
-    return response.json(classToClass(user));
+    return response.json(classToPlain(user));
   }
 );
 

@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
-import redis from 'redis';
+import Redis from 'ioredis';
 
 import redisConfig from '../config/redis';
 import AppError from '../errors/AppErrors';
 
-const redisCache = redis.createClient(redisConfig);
+const redisCache = new Redis(redisConfig);
+
+redisCache.on('error', err => console.log('redisCache Error', err));
 
 const limiter = new RateLimiterRedis({
   storeClient: redisCache,

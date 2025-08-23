@@ -33,7 +33,7 @@
     "ioredis": "^4.28.2",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.17.0",
-    "multer": "^2.0.1",
+    "multer": "^2.0.2",
     "nodemailer": "^6.9.9",
     "pg": "^8.7.1",
     "rate-limiter-flexible": "^2.3.6",

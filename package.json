@@ -39,7 +39,7 @@
     "rate-limiter-flexible": "^2.3.6",
     "redis": "^4.0.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.0"
+    "typeorm": "^0.3.26"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
